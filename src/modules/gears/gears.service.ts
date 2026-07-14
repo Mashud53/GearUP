@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma"
-import type { GearPaylod, UpdatePayload } from "./gears.interface"
+import type { FilterGear, GearPaylod, UpdatePayload } from "./gears.interface"
 
 const createGearIntoDB = async (payload: GearPaylod) => {
     const { name, description, price, category, brand, available, stock } = payload
@@ -20,8 +20,16 @@ const createGearIntoDB = async (payload: GearPaylod) => {
 
 }
 
-const getAllGearfromDB = async () => {
-    const gearResult = await prisma.gear.findMany({})
+const getAllGearfromDB = async (query: FilterGear) => {
+    const gearResult = await prisma.gear.findMany({
+        where:{
+            AND:[
+                query.category ?{category : query.category }:{ },
+                query.brand ? {brand: query.brand} : { },
+                query.price ? {price: parseFloat(query.price)} :{ }
+            ]
+        }
+    })
 
     return gearResult
 }

@@ -17,3 +17,9 @@ export interface UpdatePayload {
     available?: boolean;
     stock?: number;
 }
+
+export interface FilterGear{
+    category?: string;
+    brand?: string;
+    price?:string;
+}
