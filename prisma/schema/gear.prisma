@@ -1,0 +1,16 @@
+model Gear{
+    id String @id @default(uuid())
+    name String
+    description String
+    price Float
+    category String @db.VarChar(100)
+    brand String @db.VarChar(100)
+    available Boolean @default(true)
+    stock Int @default(0)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+
+    @@map("gears")   
+
+}

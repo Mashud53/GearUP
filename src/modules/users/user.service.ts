@@ -5,8 +5,9 @@ import config from "../../config";
 import jwt, { type JwtPayload, type SignOptions } from "jsonwebtoken"
 import { jwtUtils } from "../../utils/jwt";
 
+
 const createUserIntoDB = async (payload: CreateUsrPayload) => {
-    const { name, email, password, role, profilePhoto } = payload;
+    const { name, email, password, profilePhoto } = payload;
     const isUserExist = await prisma.user.findUnique({
         where: {
             email
@@ -24,7 +25,8 @@ const createUserIntoDB = async (payload: CreateUsrPayload) => {
             name,
             email,
             password: hashedPassword,
-            profileId: {
+
+            profile: {
                 create: {
                     ...(profilePhoto && { profilePhoto })
                 }
@@ -39,7 +41,7 @@ const createUserIntoDB = async (payload: CreateUsrPayload) => {
             email: createdUser.email
         },
         include: {
-            profileId: true
+            profile: true
         },
         omit: {
             password: true
@@ -79,15 +81,46 @@ const loginUser = async (payload: LoginUserPayload) => {
     }
 }
 
-const getMyProfilefromDB= async(userId: string)=>{
-    console.log(userId, "user service =================");
+const getMyProfilefromDB = async (userId: string) => {
+
     const user = await prisma.user.findUniqueOrThrow({
-        where:{id: userId},
-        omit:{password:true},
-        include:{profileId:true}
+        where: { id: userId },
+        omit: { password: true },
+        include: { profile: true }
     })
 
     return user
+
+}
+
+const getAllUsersFromDB = async () => {
+
+    const users = await prisma.user.findMany({
+        omit: { password: true }
+    })
+    return users
+
+}
+
+const updateUserStatusIntoDB = async (userid: string, changStatus: string) => {
+    
+    const updateUser = await prisma.user.update({
+        where: {
+            id: userid,
+        },
+        data: {
+            status: changStatus,
+        },
+        omit:{
+            password:true
+        },
+        include:{
+            profile:true
+        }
+    });
+
+    return updateUser;
+
 
 }
 
@@ -95,5 +128,7 @@ const getMyProfilefromDB= async(userId: string)=>{
 export const userService = {
     createUserIntoDB,
     loginUser,
-    getMyProfilefromDB
+    getMyProfilefromDB,
+    getAllUsersFromDB,
+    updateUserStatusIntoDB
 }

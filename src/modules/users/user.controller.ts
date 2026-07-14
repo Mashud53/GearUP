@@ -3,9 +3,8 @@ import { userService } from "./user.service";
 import httpStatus from "http-status"
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
-import jwt, { type JwtPayload } from "jsonwebtoken"
-import config from "../../config";
-import { jwtUtils } from "../../utils/jwt";
+
+
 
 
 const createUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -51,7 +50,7 @@ const loginUser = catchAsync(async (req: Request, res: Response, next: NextFunct
 
 
 const getMyProfile = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.user, "user controller ===========");
+
 
     const profile = await userService.getMyProfilefromDB(req.user?.id as string)
 
@@ -64,11 +63,40 @@ const getMyProfile = catchAsync(async (req: Request, res: Response, next: NextFu
 
 })
 
+const getAllusers = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const users = await userService.getAllUsersFromDB();
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "users retrieved successfully",
+        data: users
+    })
+})
+
+const updateUserStatus = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params
+    const {status} = req.body
+    const allowedStatus = ["ACTIVE", "SUSPEND"]
+    if(!allowedStatus.includes(status)){
+        throw new Error("Invalid status")
+    }
+    const updateRes = await userService.updateUserStatusIntoDB(id as string, status as string)
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "User Status update successfully",
+        data: updateRes
+    })
+
+})
+
 
 
 
 export const userController = {
     createUser,
     loginUser,
-    getMyProfile
+    getMyProfile,
+    getAllusers,
+    updateUserStatus
 }

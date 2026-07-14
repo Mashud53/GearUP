@@ -3,6 +3,7 @@ import express, { type Application, type Request, type Response } from "express"
 import cors from "cors"
 import config from "./config";
 import { userRoute } from "./modules/users/user.route";
+import { gearRouter } from "./modules/gears/gears.routes";
 
 const app : Application = express()
 
@@ -20,5 +21,7 @@ app.get("/", (req: Request, res:Response)=>{
 })
 
 app.use("/api/auth", userRoute)
+
+app.use("/api/gear",gearRouter)
 
 export default app
