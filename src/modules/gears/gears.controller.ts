@@ -52,10 +52,34 @@ const removeGear = catchAsync(async (req: Request, res: Response, next: NextFunc
 
 })
 
+const getGearDetails = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const result = await gearServices.getGearDetailsFromDB(id as string)
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "Gears Retrived successfully",
+        data: { result }
+
+    })
+})
+
+const getAllCategories =catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
+    const result = await gearServices.getAllGearCateFromDB()
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "Gears category retrive successfully",
+        data: { result }
+    })
+})
+
 
 export const gearController = {
     createGear,
     getAllGear,
     updateGear,
-    removeGear
+    removeGear,
+    getGearDetails,
+    getAllCategories
 }

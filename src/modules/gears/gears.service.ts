@@ -38,15 +38,34 @@ const updateGearIntoDB = async (id: string, payload: UpdatePayload) => {
 
 }
 
+const getGearDetailsFromDB =async(id:string)=>{
+    const result = await prisma.gear.findUniqueOrThrow({
+        where:{id}
+    })
+
+    return result
+
+}
+
 const removeGearFromDB = async (id: string) => {
     await prisma.gear.delete({
         where: { id }
     })
     return null
 
+}
 
+const getAllGearCateFromDB =async()=>{
 
+    console.log("gear categories ========");
+    const allCategories = await prisma.gear.findMany({
+        select:{
+            category:true
+        },
+        distinct:["category"]
+    })
 
+    return allCategories
 }
 
 
@@ -54,5 +73,7 @@ export const gearServices = {
     createGearIntoDB,
     getAllGearfromDB,
     updateGearIntoDB,
-    removeGearFromDB
+    removeGearFromDB,
+    getGearDetailsFromDB,
+    getAllGearCateFromDB
 }

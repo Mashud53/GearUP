@@ -22,6 +22,6 @@ app.get("/", (req: Request, res:Response)=>{
 
 app.use("/api/auth", userRoute)
 
-app.use("/api/gear",gearRouter)
+app.use("/api",gearRouter)
 
 export default app
