@@ -7,6 +7,8 @@ import { gearRouter } from "./modules/gears/gears.routes";
 import { paymentRoutes } from "./modules/payments/payments.routes";
 import { rentalRoute } from "./modules/rental/rental.route";
 
+import { reviewRoute } from "./modules/reviews/reviews.route";
+
 const app: Application = express()
 
 app.use(cors({
@@ -30,5 +32,6 @@ app.use("/api/auth", userRoute)
 app.use("/api", gearRouter)
 app.use("/api/payment", paymentRoutes)
 app.use("/api/rentals", rentalRoute)
+app.use("/api/gearReturn", reviewRoute)
 
 export default app

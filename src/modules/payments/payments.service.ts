@@ -4,7 +4,7 @@ import { stripe } from "../../lib/stripe"
 import config from "../../config"
 
 const createCheckoutSession = async (userId: string, gearId: string) => {
-    console.log(userId, gearId);
+   
     const transactionResult = await prisma.$transaction(async (tx) => {
         const user = await prisma.user.findUniqueOrThrow({
             where: { id: userId }
@@ -88,7 +88,7 @@ const handlePaymentConfirm = async (
             userId,
             gearId,
             totalAmount: session.amount_total! / 100,
-            status: "CONFIRMED",
+            status: "APPROVED",
           },
         });
 
