@@ -11,6 +11,8 @@ model Gear{
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
 
+    rentals Rental[]
+
     @@map("gears")   
 
 }

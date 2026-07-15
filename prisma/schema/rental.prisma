@@ -1,0 +1,12 @@
+model Rental {
+    id String @id @default(uuid())
+    userId String
+    gearId String
+    totalAmount Float
+    status String @default("PENDING")
+
+    user User @relation(fields: [userId], references: [id])
+    gear Gear @relation(fields: [gearId], references: [id])
+
+    payments Payment[]
+}
