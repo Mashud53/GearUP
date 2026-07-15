@@ -1,7 +1,13 @@
-
 enum Role {
     USER
     PROVIDER
     ADMIN
 }
 
+enum RentStatus {
+    PENDING
+    APPROVED
+    REJECTED
+    RETURNED
+    CANCELLED
+}

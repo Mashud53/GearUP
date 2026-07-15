@@ -3,7 +3,7 @@ model Rental {
     userId String
     gearId String
     totalAmount Float
-    status String @default("PENDING")
+    status RentStatus @default(PENDING)
 
     user User @relation(fields: [userId], references: [id])
     gear Gear @relation(fields: [gearId], references: [id])

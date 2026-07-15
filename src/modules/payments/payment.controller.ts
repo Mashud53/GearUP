@@ -26,15 +26,15 @@ const handlePaymentConfirm = catchAsync(async (req: Request, res: Response, next
 
     await paymentService.handlePaymentConfirm(event, signature as string)
 
-     sendResponse(res, {
+    sendResponse(res, {
         success: true,
         statusCode: httpStatus.OK,
         message: "payment successfully",
-       
+
     })
 })
 
-const getAllpayments=catchAsync(async (req: Request, res: Response, next: NextFunction)=>{
+const getAllpayments = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user?.id
     const paymentResult = await paymentService.getAllpaymentsFromDB(userId as string)
     sendResponse(res, {
@@ -45,8 +45,8 @@ const getAllpayments=catchAsync(async (req: Request, res: Response, next: NextFu
     })
 })
 
-const getPaymentDetails= catchAsync(async (req: Request, res: Response, next: NextFunction)=>{
-    const {id }= req.params
+const getPaymentDetails = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params
     const result = await paymentService.getPaymentDetailsFromDB(id as string);
     sendResponse(res, {
         success: true,
