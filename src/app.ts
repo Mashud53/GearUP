@@ -5,7 +5,6 @@ import config from "./config";
 import { userRoute } from "./modules/users/user.route";
 import { gearRouter } from "./modules/gears/gears.routes";
 import { paymentRoutes } from "./modules/payments/payments.routes";
-import { stripe } from "./lib/stripe";
 import { rentalRoute } from "./modules/rental/rental.route";
 
 const app: Application = express()
@@ -14,8 +13,6 @@ app.use(cors({
     origin: config.app_url,
     credentials: true,
 }))
-const endpointSecret = config.stripe_webhook_secret
-
 
 
 app.use("/api/payment/confirm",  express.raw({ type: 'application/json' }))

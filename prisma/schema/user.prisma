@@ -11,6 +11,7 @@ model User{
 
     profile Profile?
     rentals Rental[]
+    reviews Review[]
 
     @@map("users")
 }

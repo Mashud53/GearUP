@@ -12,6 +12,7 @@ model Gear{
     updatedAt DateTime @default(now())
 
     rentals Rental[]
+    reviews Review[]
 
     @@map("gears")   
 
