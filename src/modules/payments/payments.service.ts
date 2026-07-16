@@ -42,7 +42,7 @@ const createCheckoutSession = async (userId: string, gearId: string) => {
                 userId,
                 gearId,
             },
-            success_url: `${config.app_url}/create?success=true`,
+            success_url: `${config.app_url}/payment/confirm?success=true`,
             cancel_url: `${config.app_url}/create?success=false`,
         });
 

@@ -22,11 +22,11 @@ const createGearIntoDB = async (payload: GearPaylod) => {
 
 const getAllGearfromDB = async (query: FilterGear) => {
     const gearResult = await prisma.gear.findMany({
-        where:{
-            AND:[
-                query.category ?{category : query.category }:{ },
-                query.brand ? {brand: query.brand} : { },
-                query.price ? {price: parseFloat(query.price)} :{ }
+        where: {
+            AND: [
+                query.category ? { category: query.category } : {},
+                query.brand ? { brand: query.brand } : {},
+                query.price ? { price: parseFloat(query.price) } : {}
             ]
         }
     })
@@ -46,9 +46,9 @@ const updateGearIntoDB = async (id: string, payload: UpdatePayload) => {
 
 }
 
-const getGearDetailsFromDB =async(id:string)=>{
+const getGearDetailsFromDB = async (id: string) => {
     const result = await prisma.gear.findUniqueOrThrow({
-        where:{id}
+        where: { id }
     })
 
     return result
@@ -56,6 +56,12 @@ const getGearDetailsFromDB =async(id:string)=>{
 }
 
 const removeGearFromDB = async (id: string) => {
+    const gear = await prisma.gear.findUnique({
+        where:{id}
+    })
+    if(!gear){
+        throw new Error ("Gear not found")
+    }
     await prisma.gear.delete({
         where: { id }
     })
@@ -63,14 +69,14 @@ const removeGearFromDB = async (id: string) => {
 
 }
 
-const getAllGearCateFromDB =async()=>{
+const getAllGearCateFromDB = async () => {
 
-   
+
     const allCategories = await prisma.gear.findMany({
-        select:{
-            category:true
+        select: {
+            category: true
         },
-        distinct:["category"]
+        distinct: ["category"]
     })
 
     return allCategories
