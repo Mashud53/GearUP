@@ -9,6 +9,9 @@ import { rentalRoute } from "./modules/rental/rental.route";
 
 import { reviewRoute } from "./modules/reviews/reviews.route";
 import { notFound } from "./middleWare/notFound";
+import httpStatus from "http-status"
+
+
 
 const app: Application = express()
 
@@ -37,7 +40,13 @@ app.use("/api/gearReturn", reviewRoute)
 
 app.use(notFound)
 app.use((err:any, req: Request, res: Response, next: NextFunction)=>{
-
+ res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+        message:err.message,
+        error: err.stack
+        
+    })
 })
 
 export default app
