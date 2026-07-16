@@ -1890,7 +1890,7 @@ var removeGearFromDB = async (id) => {
   return null;
 };
 var getAllGearCateFromDB = async () => {
-  console.log("gear categories ========");
+ 
   const allCategories = await prisma.gear.findMany({
     select: {
       category: true

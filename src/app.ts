@@ -1,5 +1,5 @@
 import cookieParser from "cookie-parser";
-import express, { type Application, type Request, type Response } from "express"
+import express, { type Application, type NextFunction, type Request, type Response } from "express"
 import cors from "cors"
 import config from "./config";
 import { userRoute } from "./modules/users/user.route";
@@ -8,6 +8,7 @@ import { paymentRoutes } from "./modules/payments/payments.routes";
 import { rentalRoute } from "./modules/rental/rental.route";
 
 import { reviewRoute } from "./modules/reviews/reviews.route";
+import { notFound } from "./middleWare/notFound";
 
 const app: Application = express()
 
@@ -33,5 +34,10 @@ app.use("/api", gearRouter)
 app.use("/api/payment", paymentRoutes)
 app.use("/api/rentals", rentalRoute)
 app.use("/api/gearReturn", reviewRoute)
+
+app.use(notFound)
+app.use((err:any, req: Request, res: Response, next: NextFunction)=>{
+
+})
 
 export default app

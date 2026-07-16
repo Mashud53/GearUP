@@ -37,7 +37,7 @@ const createReviews = async (userId: string, rentalId: string, payload: ReviewPa
 
     // })
     const { rating, comment } = payload;
-    console.log(payload,rentalId, "review service================");
+    
     return await prisma.$transaction(async(tx)=>{
         const rental = await tx.rental.findUniqueOrThrow({
             where:{id: rentalId}

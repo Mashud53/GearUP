@@ -65,7 +65,7 @@ const removeGearFromDB = async (id: string) => {
 
 const getAllGearCateFromDB =async()=>{
 
-    console.log("gear categories ========");
+   
     const allCategories = await prisma.gear.findMany({
         select:{
             category:true

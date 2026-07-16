@@ -19,7 +19,7 @@ const getRentalDetails = async (id: string) => {
 }
 
 const updateRental = async (id: string, payload: RentStatus) => {
-    console.log(id, payload, "rental service==========");    
+       
 
     const updateResult = await prisma.rental.update({
         where:{

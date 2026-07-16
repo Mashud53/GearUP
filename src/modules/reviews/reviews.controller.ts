@@ -10,15 +10,13 @@ const createReviews = catchAsync(async (req: Request, res: Response, next: NextF
     const { id } = req.params;
     const payload = req.body;
 
-    console.log(id,"rental controller=====");
-
     const result = await reviewService.createReviews(userId as string, id as string, payload as ReviewPayload)
 
     sendResponse(res, {
         success: true,
         statusCode: httpStatus.CREATED,
         message: "Review created successfully",
-        data: result 
+        data: result
     })
 })
 
