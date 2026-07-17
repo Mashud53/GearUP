@@ -12,7 +12,7 @@ router.post("/login", userController.loginUser);
 
 router.get("/me",auth("USER","ADMIN","PROVIDER"),userController.getMyProfile)
 router.get("/users", auth("ADMIN"), userController.getAllusers)
-router.put("/user/:id", userController.updateUserStatus)
+router.put("/user/:id", auth("ADMIN"), userController.updateUserStatus)
 
 
 
